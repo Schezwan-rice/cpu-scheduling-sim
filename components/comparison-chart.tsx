@@ -1,85 +1,99 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { Chart, registerables } from "chart.js"
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartOptions,
+} from "chart.js"
+import { Bar } from "react-chartjs-2"
 
-Chart.register(...registerables)
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-export default function ComparisonChart() {
-  const chartRef = useRef<HTMLCanvasElement>(null)
-  const chartInstance = useRef<Chart | null>(null)
+interface ComparisonChartProps {
+  data: {
+    labels: string[]
+    datasets: {
+      label: string
+      data: number[]
+      backgroundColor: string
+      borderColor: string
+      borderWidth: number
+    }[]
+  }
+  title: string
+  yAxisLabel: string
+}
+
+export default function ComparisonChart({ data, title, yAxisLabel }: ComparisonChartProps) {
+  const chartRef = useRef<ChartJS<"bar">>(null)
+
+  const options: ChartOptions<"bar"> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top" as const,
+        labels: {
+          usePointStyle: true,
+          padding: 20,
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            return `${context.dataset.label}: ${context.parsed.y.toFixed(2)}s`
+          },
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: yAxisLabel,
+          font: {
+            size: 14,
+            weight: "bold",
+          },
+        },
+        ticks: {
+          callback: function (value) {
+            return value + "s"
+          },
+        },
+      },
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+    animation: {
+      duration: 1000,
+      easing: "easeInOutQuart",
+    },
+  }
 
   useEffect(() => {
-    if (!chartRef.current) return
-
-    // Destroy existing chart
-    if (chartInstance.current) {
-      chartInstance.current.destroy()
+    if (chartRef.current) {
+      chartRef.current.update()
     }
+  }, [data])
 
-    // Create new chart
-    const ctx = chartRef.current.getContext("2d")
-    if (!ctx) return
-
-    chartInstance.current = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: ["FCFS", "SJF", "Round Robin", "Priority"],
-        datasets: [
-          {
-            label: "Average Waiting Time",
-            data: [8.5, 4.2, 6.8, 7.3],
-            backgroundColor: "rgba(99, 102, 241, 0.5)",
-            borderColor: "rgb(99, 102, 241)",
-            borderWidth: 1,
-          },
-          {
-            label: "Average Turnaround Time",
-            data: [12.3, 7.8, 10.5, 11.2],
-            backgroundColor: "rgba(14, 165, 233, 0.5)",
-            borderColor: "rgb(14, 165, 233)",
-            borderWidth: 1,
-          },
-          {
-            label: "Average Response Time",
-            data: [8.5, 4.2, 2.1, 5.7],
-            backgroundColor: "rgba(249, 115, 22, 0.5)",
-            borderColor: "rgb(249, 115, 22)",
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: "top",
-          },
-          tooltip: {
-            mode: "index",
-            intersect: false,
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: "Time (ms)",
-            },
-          },
-        },
-      },
-    })
-
-    return () => {
-      if (chartInstance.current) {
-        chartInstance.current.destroy()
-      }
-    }
-  }, [])
-
-  return <canvas ref={chartRef} />
+  return (
+    <div className="w-full h-[400px] p-4 bg-background rounded-lg border">
+      <div className="text-center mb-4">
+        <h3 className="text-lg font-semibold">{title}</h3>
+      </div>
+      <Bar ref={chartRef} options={options} data={data} />
+    </div>
+  )
 }
 

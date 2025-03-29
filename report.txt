@@ -2,235 +2,101 @@
 
 ## 1. Project Overview
 
-The CPU Scheduling Algorithms Visualizer is an interactive web application designed to help students, educators, and professionals understand various CPU scheduling algorithms through dynamic visualizations and simulations. This educational tool aims to bridge the gap between theoretical knowledge and practical understanding of operating systems concepts.
+The CPU Scheduling Algorithms Visualizer is an interactive web application designed to help students and educators understand CPU scheduling algorithms through dynamic visualizations. This tool bridges the gap between theoretical knowledge and practical understanding of operating systems concepts.
 
-Operating Systems courses often introduce CPU scheduling algorithms as abstract concepts, making it difficult for students to grasp their real-world applications and behavior. This project addresses this challenge by providing an intuitive, visual interface where users can:
+Operating Systems courses often present CPU scheduling algorithms as abstract concepts, making them difficult to grasp. This project addresses this challenge by providing a visual interface where users can:
+- Observe algorithm behavior with different process sets
+- Compare multiple algorithms side-by-side
+- Analyze key metrics like waiting time, turnaround time, and CPU utilization
 
-- Observe how different CPU scheduling algorithms allocate processor time to various processes
-- Experiment with custom process sets to see how parameters affect scheduling decisions
-- Compare the performance of multiple algorithms side-by-side
-- Analyze important metrics like average waiting time, turnaround time, and CPU utilization
+The application implements four fundamental CPU scheduling algorithms:
+1. First-Come, First-Served (FCFS)
+2. Shortest Job First (SJF)
+3. Round Robin (RR)
+4. Priority Scheduling
 
-The application focuses on four fundamental CPU scheduling algorithms that form the cornerstone of operating systems education:
-1. First-Come, First-Served (FCFS) - A non-preemptive algorithm that processes tasks in the order they arrive
-2. Shortest Job First (SJF) - A non-preemptive algorithm that prioritizes processes with the shortest execution time
-3. Round Robin (RR) - A preemptive algorithm that allocates CPU time in fixed time quantum slices
-4. Priority Scheduling - A scheduling approach where processes are executed based on their priority values
-
-Additionally, the project offers a comprehensive comparison tool that allows users to see how these different algorithms perform with identical process sets, facilitating a deeper understanding of their relative strengths and weaknesses.
-
-Built with modern web technologies including Next.js, TypeScript, and Tailwind CSS, the application provides a responsive, accessible, and intuitive user interface that works across various devices and screen sizes. The visualizations are implemented using animation libraries like Framer Motion, with data representation powered by Chart.js.
-
-This project serves as both an educational resource for students learning about operating systems and a reference implementation that demonstrates best practices in web development, interactive data visualization, and educational software design.
+Built with Next.js, TypeScript, and Tailwind CSS, the application provides a responsive and accessible user interface with visualizations implemented using Framer Motion and Chart.js.
 
 ## 2. Module-Wise Breakdown
 
-The CPU Scheduling Algorithms Visualizer project follows a modular architecture based on Next.js's app router structure. The project is organized into several key modules, each serving a specific purpose:
+The project follows a modular architecture based on Next.js's app router structure:
 
 ### 2.1 Core Application Structure
-- **app/**: The main application directory containing all pages and routes
-  - **layout.tsx**: Defines the global layout structure used across all pages
-  - **page.tsx**: The homepage that introduces the project and provides navigation to algorithm-specific pages
-  - **globals.css**: Global CSS styles applied throughout the application
+- **app/**: Main application directory containing pages and routes
+  - **layout.tsx**: Global layout structure
+  - **page.tsx**: Homepage with navigation to algorithm-specific pages
+  - **globals.css**: Global styles
 
 ### 2.2 Algorithm-Specific Modules
-- **app/fcfs/**: First-Come, First-Served algorithm visualization module
-  - Contains the implementation, visualization, and educational content for the FCFS algorithm
-  - Includes input forms for users to customize process parameters
-  - Displays animated visualization of the algorithm in action
-  - Shows performance metrics calculated from the simulation
-
-- **app/sjf/**: Shortest Job First algorithm visualization module
-  - Implements the SJF scheduling logic
-  - Provides interactive controls for users to experiment with different process sets
-  - Visualizes the scheduling decisions made by the algorithm
-  - Calculates and presents key performance metrics
-
-- **app/round-robin/**: Round Robin algorithm visualization module
-  - Includes implementation of the time quantum-based scheduling
-  - Offers controls to adjust the time quantum parameter
-  - Animates the cyclic process execution characteristic of Round Robin
-  - Presents waiting time, turnaround time, and other relevant metrics
-
-- **app/priority/**: Priority Scheduling algorithm visualization module
-  - Implements priority-based scheduling logic
-  - Allows users to assign priorities to processes
-  - Visualizes how priorities affect execution order
-  - Calculates efficiency metrics for analysis
-
-- **app/comparison/**: Algorithm comparison module
-  - Provides side-by-side comparison of all algorithms using identical process sets
-  - Generates comparative metrics to highlight the strengths and weaknesses of each approach
-  - Includes visual charts for performance comparison
-  - Offers educational content explaining why certain algorithms perform better under specific conditions
+- **app/fcfs/**: First-Come, First-Served visualization
+- **app/sjf/**: Shortest Job First visualization
+- **app/round-robin/**: Round Robin visualization with time quantum controls
+- **app/priority/**: Priority Scheduling visualization
+- **app/comparison/**: Side-by-side algorithm comparison tool
 
 ### 2.3 Reusable Components
-- **components/**: Directory containing reusable UI components
-  - **algorithm-animation.tsx**: Core visualization component that renders the scheduling animations
-  - **comparison-chart.tsx**: Chart component for visualizing comparative metrics
-  - **navbar.tsx**: Navigation component used across all pages
-  - **footer.tsx**: Footer component with links and information
-  - **theme-provider.tsx**: Provides theme context for dark/light mode functionality
-  - **ui/**: Directory containing atomic UI components from Shadcn/UI library
+- **components/**: UI component directory
+  - **algorithm-animation.tsx**: Core visualization component
+  - **comparison-chart.tsx**: Comparative metrics visualization
+  - **ui/**: Atomic UI components from Shadcn/UI
 
-### 2.4 Utility and Hook Modules
-- **lib/**: Library of utility functions and shared logic
-  - Contains algorithm implementations, helper functions, and data transformations
-  - Houses type definitions and interfaces used across the application
-  - Includes utility functions for calculating performance metrics
+### 2.4 Utility Layer
+- **lib/**: Utility functions, algorithm implementations, and shared logic
+- **hooks/**: Custom React hooks for state management and animations
 
-- **hooks/**: Custom React hooks
-  - Implements reusable logic for managing process state
-  - Provides hooks for algorithm simulations
-  - Includes hooks for managing UI state and animations
-
-This modular structure promotes code reusability, maintainability, and separation of concerns. Each algorithm is implemented as a separate module while sharing common components and utilities, allowing for easy extension to include additional scheduling algorithms in the future.
+This structure promotes code reusability and separation of concerns, allowing for easy extension to include additional algorithms.
 
 ## 3. Functionalities
 
-The CPU Scheduling Algorithms Visualizer offers a comprehensive set of features designed to enhance the learning experience of operating systems concepts. The key functionalities are detailed below:
+The CPU Scheduling Algorithms Visualizer offers key features to enhance learning of operating systems concepts:
 
 ### 3.1 Algorithm Visualizations
+- **FCFS**: Displays process execution in arrival order with non-preemptive execution
+- **SJF**: Visualizes shortest-burst-time-first selection with optimal waiting time demonstration
+- **Round Robin**: Shows time-quantum-based scheduling with configurable quantum values
+- **Priority Scheduling**: Demonstrates priority-based execution with optional aging mechanism
 
-#### 3.1.1 First-Come, First-Served (FCFS) Visualization
-- **Process Queue Simulation**: Displays processes in the order they arrive in the ready queue
-- **Gantt Chart Animation**: Animates the execution of processes in arrival order
-- **Non-preemptive Execution**: Demonstrates how each process runs to completion before the next begins
-- **Metric Calculation**: Computes and displays waiting time, turnaround time, and response time for each process
-- **Average Metrics**: Calculates and shows average waiting time, turnaround time, and CPU utilization
+### 3.2 Analysis Tools
+- **Comparative Analysis**: Side-by-side algorithm comparison with identical process sets
+- **Performance Metrics**: Calculation and visualization of waiting time, turnaround time, and CPU utilization
+- **Chart Visualizations**: Bar and line charts showing relative algorithm performance
 
-#### 3.1.2 Shortest Job First (SJF) Visualization
-- **Burst Time-Based Scheduling**: Visualizes how processes are scheduled based on their execution time
-- **Optimal Average Waiting Time**: Demonstrates how SJF achieves optimal average waiting time
-- **Process Selection Logic**: Shows the decision-making process when selecting the shortest job
-- **Performance Metrics**: Calculates efficiency metrics to demonstrate SJF's advantages
-- **Starvation Scenario**: Illustrates the potential for process starvation in SJF
-
-#### 3.1.3 Round Robin (RR) Visualization
-- **Time Quantum Selection**: Allows users to adjust the time quantum parameter
-- **Preemptive Execution**: Demonstrates how processes yield the CPU after using their time quantum
-- **Ready Queue Cycling**: Visualizes how processes move through the ready queue in a circular manner
-- **Context Switching Animation**: Shows the overhead of switching between processes
-- **Time Quantum Impact Analysis**: Illustrates how the time quantum value affects overall performance
-
-#### 3.1.4 Priority Scheduling Visualization
-- **Priority Assignment**: Enables users to assign priority values to processes
-- **Priority-Based Execution**: Demonstrates how processes execute based on their priority levels
-- **Priority Inversion**: Illustrates the concept of priority inversion in certain scenarios
-- **Aging Mechanism**: Optionally shows how aging can prevent starvation in priority scheduling
-- **Metric Calculation**: Computes performance metrics based on priority-driven execution
-
-### 3.2 Comparison and Analysis Tools
-
-#### 3.2.1 Algorithm Comparison
-- **Side-by-Side Visualization**: Displays multiple algorithms running the same process set simultaneously
-- **Comparative Metrics**: Generates comparative charts showing the performance differences
-- **Scenario-Based Analysis**: Demonstrates which algorithms work best for specific workload patterns
-- **Metric Breakdown**: Provides detailed comparison of waiting time, turnaround time, and response time across algorithms
-
-#### 3.2.2 Performance Analysis
-- **Statistical Summary**: Generates statistical data about algorithm performance
-- **Chart Visualization**: Creates bar charts, line graphs, and other visualizations to represent performance data
-- **CPU Utilization Tracking**: Monitors and displays CPU utilization across different algorithms
-- **Throughput Calculation**: Computes and compares the throughput of each scheduling approach
-
-### 3.3 Interactive Learning Features
-
-#### 3.3.1 Process Creation and Customization
-- **Process Parameter Adjustment**: Allows users to set arrival time, burst time, and priority for each process
-- **Random Process Generation**: Generates random process sets for experimentation
-- **Predefined Scenarios**: Offers common scenarios to demonstrate specific algorithm characteristics
-- **Process Set Saving**: Enables users to save and reload process configurations
-
-#### 3.3.2 Educational Content
-- **Algorithm Explanations**: Provides detailed textual explanations of each algorithm's principles
-- **Interactive Tutorials**: Offers step-by-step guides to understanding each scheduling approach
-- **Theoretical Background**: Includes relevant theoretical concepts from operating systems
-- **Quiz Elements**: Incorporates knowledge-testing features to reinforce learning
-
-### 3.4 User Experience Features
-
-#### 3.4.1 Responsive Interface
-- **Multi-Device Support**: Adapts to different screen sizes and device types
-- **Accessible Design**: Implements accessibility standards for inclusive learning
-- **Dark/Light Mode**: Provides theme options for different user preferences and environments
-- **Intuitive Navigation**: Features a clear navigation structure between different algorithm modules
-
-#### 3.4.2 Visualization Controls
-- **Animation Speed Control**: Allows users to adjust the speed of visualizations
-- **Pause and Resume**: Enables pausing and resuming animations for closer examination
-- **Step-by-Step Mode**: Provides option to advance the simulation one step at a time
-- **Reset Functionality**: Allows users to reset simulations to their initial state
-
-This comprehensive set of functionalities makes the CPU Scheduling Algorithms Visualizer a powerful educational tool for students, educators, and professionals seeking to understand the nuances of different scheduling approaches in operating systems.
+### 3.3 Interactive Features
+- **Process Creation**: Custom process set creation with adjustable parameters
+- **Animation Controls**: Speed adjustment, pause/resume, and step-by-step execution
+- **Educational Content**: Contextual explanations of algorithm principles and behaviors
+- **Responsive Design**: Interface adaptation for different screen sizes with accessibility features
 
 ## 4. Technology Used
 
-The CPU Scheduling Algorithms Visualizer project leverages a modern stack of technologies, libraries, and tools to deliver a responsive, interactive, and educational web application. The technologies used in this project are detailed below:
+The project leverages modern web technologies to deliver an interactive educational application:
 
 ### 4.1 Programming Languages
-- **TypeScript (5.x)**: Superset of JavaScript that adds static types, enhancing code quality and developer experience
-- **JavaScript (ES6+)**: Used in conjunction with TypeScript for client-side functionality
-- **HTML5**: Markup language for structuring the web application
-- **CSS3**: Styling language used alongside Tailwind CSS
+- **TypeScript/JavaScript**: Core programming with static typing
+- **HTML5/CSS3**: Markup and styling
 
 ### 4.2 Frontend Framework and Libraries
-- **Next.js (15.1.0)**: React framework providing server-side rendering, static site generation, and routing
-- **React (19.x)**: JavaScript library for building user interfaces
-- **React DOM (19.x)**: React package for DOM-specific methods
-- **Tailwind CSS (3.4.17)**: Utility-first CSS framework for rapid UI development
-- **Framer Motion**: Animation library used for smooth and interactive visualizations
-- **Chart.js**: Flexible JavaScript charting library for creating responsive data visualizations
-- **Shadcn/UI**: Component library built on Radix UI primitives providing accessible UI components
-- **Lucide React**: Icon library providing clean and consistent iconography
-- **Next Themes**: Library for managing themes in Next.js applications
-- **React Hook Form**: Library for flexible and efficient form handling
-- **Zod**: TypeScript-first schema validation library
-- **date-fns**: Modern JavaScript date utility library
-- **Sonner**: Toast notification library for React
-- **Embla Carousel**: Lightweight carousel library for React
-- **React Day Picker**: Flexible date picker component for React
+- **Next.js (15.1.0)**: React framework for routing and rendering
+- **React (19.x)**: UI component library
+- **Tailwind CSS**: Utility-first styling framework
+- **Framer Motion**: Animation library for visualizations
+- **Chart.js**: Data visualization library
+- **Shadcn/UI**: Component library built on Radix UI
 
-### 4.3 UI Component Libraries
-- **Radix UI**: Headless UI component library providing accessibility and customization
-  - Includes components like Accordion, Dialog, Dropdown Menu, Tabs, and many others
-- **Class Variance Authority**: Library for creating variant components with Tailwind CSS
-- **clsx/tailwind-merge**: Utilities for conditional class name construction
-- **cmdk**: Command menu component for keyboard-first interfaces
-- **React Resizable Panels**: Library for creating resizable panel layouts
-- **Vaul**: Drawer component for React
+### 4.3 Development Tools
+- **Node.js**: JavaScript runtime environment
+- **npm/pnpm**: Package management
+- **Git/GitHub**: Version control and collaboration
 
-### 4.4 Development Tools
-- **Node.js**: JavaScript runtime environment for development
-- **npm/pnpm**: Package managers for JavaScript dependencies
-- **ESLint**: Static code analysis tool for identifying problematic patterns
-- **PostCSS**: Tool for transforming CSS with JavaScript plugins
-- **Autoprefixer**: PostCSS plugin to parse CSS and add vendor prefixes
-- **TypeScript Compiler**: Transpiles TypeScript to JavaScript
-
-### 4.5 Build and Deployment Tools
-- **Next.js Build System**: Builds optimized production assets
-- **Tailwind CSS JIT Compiler**: Just-in-time compiler for Tailwind CSS
-- **Vercel**: Platform for deploying and hosting web applications (presumed)
-
-### 4.6 Version Control and Collaboration
-- **Git**: Distributed version control system
-- **GitHub**: Web-based platform for version control and collaboration
-  - Repository: Schezwan-rice/cpu-scheduling-sim
-
-### 4.7 Architecture Patterns and Design Principles
-- **Component-Based Architecture**: Organizing UI into reusable components
-- **Server Components and Client Components**: Next.js pattern for hybrid rendering
-- **Responsive Design**: Making the application usable across various devices and screen sizes
-- **Modular CSS with Tailwind**: Using utility classes for styling
-- **Type-Safe Development**: Leveraging TypeScript for type checking
-- **Accessibility**: Following web accessibility standards
-
-This comprehensive technology stack ensures that the CPU Scheduling Algorithms Visualizer is built on modern, maintainable, and performant technologies, providing a solid foundation for both current features and future enhancements.
+### 4.4 Architecture Patterns
+- **Component-Based Architecture**: Reusable UI components
+- **Server and Client Components**: Next.js hybrid rendering
+- **Responsive Design**: Multi-device support
+- **Type-Safe Development**: Enhanced code quality through TypeScript
 
 ## 5. Flow Diagram
 
-Below is a simplified yet comprehensive flow diagram representing the architecture and user interaction flow of the CPU Scheduling Algorithms Visualizer application:
+Below is a flow diagram representing the application architecture and user interaction paths:
 
 ```mermaid
 graph TD
@@ -253,12 +119,6 @@ graph TD
         Validation --> Simulation[Algorithm Simulation]
         Simulation --> Visualization[Animation Visualization]
         Visualization --> Metrics[Performance Metrics]
-        
-        %% Optional Flows
-        InputForm --> RandomGen[Random Process Generation]
-        RandomGen --> Validation
-        Simulation --> ModifyParams[Modify Parameters]
-        ModifyParams --> Simulation
     end
     
     %% Connect Each Algorithm to Common Flow
@@ -271,975 +131,169 @@ graph TD
     ComparisonTool --> CompInputForm[Comparison Input Form]
     CompInputForm --> SimulateAll[Simulate All Algorithms]
     SimulateAll --> CompareResults[Compare Results]
-    CompareResults --> ComparisonCharts[Comparison Charts]
     
-    %% System Component Interactions
+    %% System Components
     subgraph SystemComponents[System Components]
         UIComponents[UI Components] <--> SchedulingLogic[Scheduling Logic]
-        SchedulingLogic <--> Metrics
-        AnimationEngine[Animation Engine] <--> Visualization
-        SchedulingLogic <--> AnimationEngine
+        SchedulingLogic <--> AnimationEngine[Animation Engine]
     end
-    
-    %% Data Flow
-    subgraph DataFlow[Data Flow]
-        ProcessData[Process Data] --> SchedulingLogic
-        SchedulingLogic --> SchedulingResults[Scheduling Results]
-        SchedulingResults --> MetricsCalculation[Metrics Calculation]
-        SchedulingResults --> AnimationData[Animation Data]
-    end
-    
-    %% Legend
-    classDef userAction fill:#f9f,stroke:#333,stroke-width:2px
-    classDef page fill:#bbf,stroke:#333,stroke-width:1px
-    classDef component fill:#bfb,stroke:#333,stroke-width:1px
-    classDef data fill:#fbb,stroke:#333,stroke-width:1px
-    
-    class User,InputForm,ModifyParams,CompInputForm userAction
-    class HomePage,FCFS,SJF,RR,Priority,ComparisonTool page
-    class UIComponents,SchedulingLogic,AnimationEngine,MetricsCalculation component
-    class ProcessData,SchedulingResults,AnimationData data
 ```
 
-This diagram illustrates:
-
-1. **User Interaction Flow**: How users navigate through the application from the homepage to specific algorithm pages or the comparison tool.
-
-2. **Algorithm Page Flow**: The common interaction pattern found in all algorithm-specific pages, including process input, validation, simulation, visualization, and metric calculation.
-
-3. **System Components**: The main technical components that power the application, including UI components, scheduling logic, and the animation engine.
-
-4. **Data Flow**: How data moves through the system, from user input to scheduling results and visualization.
-
-The diagram provides a clear visual representation of both the user experience flow and the underlying system architecture of the CPU Scheduling Algorithms Visualizer.
+The diagram illustrates the user journey through the application, showing how users navigate from the homepage to specific algorithm pages or the comparison tool. It also depicts the common workflow within algorithm pages and key system component interactions.
 
 ## 6. Revision Tracking on GitHub
 
-The CPU Scheduling Algorithms Visualizer project uses GitHub for version control, collaboration, and project management. Below are the details of the repository and revision tracking:
+The project uses GitHub for version control and collaboration:
 
 ### 6.1 Repository Information
-- **Repository Name**: cpu-scheduling-sim
-- **GitHub Link**: https://github.com/Schezwan-rice/cpu-scheduling-sim
+- **Repository**: cpu-scheduling-sim (https://github.com/Schezwan-rice/cpu-scheduling-sim)
 - **Main Branch**: main
 
-### 6.2 Version Control Workflow
+### 6.2 Development Workflow
+- **Feature-based branching** with format `feature/feature-name`
+- **Semantic commit messages** following conventional commits standard
+- **Pull request process** with code reviews and automated checks
+- **Issue tracking** using templates and labels for categorization
+- **CI/CD pipeline** for testing, code quality checks, and deployment
+- **Semantic versioning** (MAJOR.MINOR.PATCH) for releases
 
-The project follows a feature-based branching strategy:
-
-1. **Main Branch**: Contains the stable, production-ready version of the application
-2. **Feature Branches**: Created for developing new features or enhancements
-   - Format: `feature/feature-name`
-   - Example: `feature/round-robin-visualization`
-3. **Bug Fix Branches**: Created for addressing bugs or issues
-   - Format: `fix/bug-description`
-   - Example: `fix/fcfs-calculation-error`
-4. **Release Branches**: Created for preparing release versions
-   - Format: `release/version-number`
-   - Example: `release/v1.0.0`
-
-### 6.3 Commit Conventions
-
-The project follows semantic commit message conventions to maintain clear and consistent commit history:
-
-1. **Feature Commits**: `feat: Add round robin scheduling visualization`
-2. **Bug Fix Commits**: `fix: Correct waiting time calculation in SJF`
-3. **Documentation Updates**: `docs: Update README with installation instructions`
-4. **Style Changes**: `style: Format code according to project standards`
-5. **Refactoring**: `refactor: Optimize scheduling algorithm implementation`
-6. **Performance Improvements**: `perf: Improve animation rendering efficiency`
-7. **Test Additions/Changes**: `test: Add unit tests for priority scheduling`
-8. **Chore**: `chore: Update dependencies`
-
-### 6.4 Pull Request Process
-
-The project follows a collaborative pull request process to ensure code quality:
-
-1. **PR Creation**: Developer creates a pull request from their feature branch to the main branch
-2. **PR Template**: Pull requests follow a standardized template that includes:
-   - Description of changes
-   - Issue reference
-   - Testing procedures
-   - Screenshots/recordings (if applicable)
-3. **Code Review**: At least one team member reviews the code
-4. **Automated Checks**: CI/CD pipeline runs tests and checks code quality
-5. **Approval and Merge**: After approval, changes are merged into the main branch
-
-### 6.5 Issue Tracking
-
-GitHub Issues are used to track bugs, feature requests, and other project-related tasks:
-
-1. **Issue Templates**:
-   - Bug Report Template
-   - Feature Request Template
-   - Documentation Improvement Template
-2. **Labels**: Issues are tagged with labels to categorize them:
-   - `bug`: Indicates an unexpected problem or unintended behavior
-   - `enhancement`: New feature or improvement requests
-   - `documentation`: Documentation-related issues
-   - `good first issue`: Issues suitable for newcomers to the project
-   - Algorithm-specific labels: `fcfs`, `sjf`, `round-robin`, `priority`
-   - Component-specific labels: `ui`, `animation`, `metrics`, `comparison`
-3. **Milestones**: Issues are grouped into milestones for release planning
-
-### 6.6 Continuous Integration/Continuous Deployment
-
-The project utilizes GitHub Actions for CI/CD:
-
-1. **Automated Testing**: Runs unit and integration tests on pull requests
-2. **Code Quality Checks**: Enforces code style and quality standards
-3. **Build Verification**: Ensures the application builds successfully
-4. **Deployment**: Automatically deploys to staging or production environments based on branch
-
-### 6.7 Release Management
-
-The project follows a semantic versioning approach for releases:
-
-1. **Version Format**: MAJOR.MINOR.PATCH (e.g., 1.0.0)
-2. **Release Notes**: Comprehensive release notes are generated for each version
-3. **GitHub Releases**: Official releases are tagged and published through GitHub Releases
-4. **Asset Generation**: Built assets are attached to releases for easy download
-
-This structured approach to revision tracking ensures that the CPU Scheduling Algorithms Visualizer project maintains a clean, organized codebase with a clear history of changes, facilitating collaboration among team members and making it easier for new contributors to join the project.
+This structured approach ensures a clean, organized codebase with clear history, facilitating collaboration and future contributions.
 
 ## 7. Conclusion and Future Scope
 
 ### 7.1 Conclusion
+The CPU Scheduling Algorithms Visualizer successfully creates an interactive educational tool that bridges the gap between theoretical concepts and practical understanding of CPU scheduling algorithms. Key achievements include:
 
-The CPU Scheduling Algorithms Visualizer project successfully achieves its primary goal of creating an interactive, educational tool for understanding CPU scheduling algorithms. Through the implementation of visual simulations for FCFS, SJF, Round Robin, and Priority Scheduling algorithms, the application bridges the gap between theoretical concepts and practical understanding in operating systems education.
+- Development of visual simulations for four fundamental scheduling algorithms
+- Implementation of comparative analysis tools for algorithm evaluation
+- Creation of an accessible, responsive interface using modern web technologies
+- Delivery of an educational resource for operating systems students and educators
 
-Key achievements of the project include:
-
-1. **Interactive Learning Environment**: The project provides an engaging, hands-on approach to learning CPU scheduling concepts, making abstract operating systems principles more concrete and accessible.
-
-2. **Comprehensive Algorithm Coverage**: All four fundamental CPU scheduling algorithms are implemented with detailed visualizations and educational content, offering a complete educational resource.
-
-3. **Comparative Analysis Tool**: The comparison feature enables users to evaluate the strengths and weaknesses of different scheduling approaches with identical process sets, fostering critical thinking and deeper understanding.
-
-4. **Modern Web Technologies**: By leveraging cutting-edge web development technologies like Next.js, TypeScript, and Framer Motion, the project delivers a responsive, accessible, and visually appealing user experience.
-
-5. **Educational Resource**: The project serves as a valuable resource for students, educators, and professionals in the field of computer science, particularly those studying operating systems concepts.
-
-6. **Open Source Contribution**: As an open-source project, it contributes to the educational technology community and provides opportunities for collaborative improvement.
-
-The CPU Scheduling Algorithms Visualizer demonstrates how interactive visualization can enhance understanding of complex computer science concepts, making it a valuable addition to the educational technology landscape.
+The project demonstrates how interactive visualization can enhance understanding of complex computer science concepts, making it a valuable addition to educational technology resources.
 
 ### 7.2 Future Scope
+Potential areas for enhancement include:
 
-While the current version of the CPU Scheduling Algorithms Visualizer provides a robust foundation for learning CPU scheduling algorithms, there are several areas for potential enhancement and expansion:
+- **Additional Algorithms**: SRTF, Multilevel Queue, and Multilevel Feedback Queue implementations
+- **Enhanced Visualizations**: Timeline scrubbing, process state transitions, and 3D representations
+- **Advanced Features**: Custom algorithm creation, performance prediction, and workload pattern generation
+- **Educational Enhancements**: Interactive tutorials, quizzes, and gamification elements
+- **Technical Improvements**: Offline functionality, mobile app versions, and performance optimization
+- **Collaboration Features**: User accounts, result sharing, and community examples
 
-#### 7.2.1 Additional Algorithms
-- **Shortest Remaining Time First (SRTF)**: Implement the preemptive version of SJF
-- **Multilevel Queue Scheduling**: Add visualization for multiple priority queues with different scheduling algorithms
-- **Multilevel Feedback Queue**: Demonstrate how processes can move between different priority queues
-- **Deadline Scheduling**: Include algorithms that handle real-time task scheduling with deadlines
-- **Fair Share Scheduling**: Visualize algorithms that ensure fair CPU distribution among user groups
-
-#### 7.2.2 Enhanced Visualizations
-- **3D Visualizations**: Develop three-dimensional representations of scheduling processes
-- **Timeline Scrubbing**: Allow users to manually move through the timeline of algorithm execution
-- **Process State Transitions**: Visualize the transitions between different process states (ready, running, waiting, etc.)
-- **Memory Management Integration**: Show the relationship between CPU scheduling and memory management
-- **Interactive Gantt Chart Manipulation**: Enable users to manipulate the Gantt chart to see how changes affect metrics
-
-#### 7.2.3 Advanced Features
-- **Algorithm Customization**: Allow users to modify algorithm parameters and rules to create custom scheduling approaches
-- **Scheduling Algorithm Generator**: Provide an interface for users to create their own scheduling algorithms
-- **Performance Prediction**: Implement machine learning models to predict algorithm performance with different workloads
-- **Process Pattern Recognition**: Automatically recognize patterns in process arrival and burst times to suggest optimal algorithms
-- **Workload Generator**: Create realistic workload patterns based on common computing scenarios
-
-#### 7.2.4 Educational Enhancements
-- **Interactive Tutorials**: Develop guided tutorials with step-by-step explanations
-- **Challenge Modes**: Create problem-solving scenarios where users must select the optimal algorithm
-- **Quiz and Assessment System**: Implement knowledge-testing features with automatic feedback
-- **Achievement System**: Add gamification elements to encourage learning and exploration
-- **Curriculum Integration**: Develop resources for educators to integrate the tool into their courses
-
-#### 7.2.5 Technical Improvements
-- **Offline Functionality**: Implement Progressive Web App features for offline use
-- **Mobile App Version**: Develop native mobile applications for iOS and Android
-- **API for Scheduling Simulation**: Create an API that allows other applications to use the scheduling simulation engine
-- **Performance Optimization**: Enhance the performance of simulations for larger process sets
-- **Internationalization**: Add support for multiple languages to reach a global audience
-
-#### 7.2.6 Collaboration Features
-- **User Accounts**: Allow users to save their configurations and results
-- **Sharing Capabilities**: Enable sharing of simulations and results with others
-- **Community Examples**: Create a repository of user-submitted process sets and scenarios
-- **Collaborative Simulations**: Enable real-time collaboration on scheduling simulations
-- **Discussion and Comment System**: Add the ability to discuss and annotate simulations
-
-The future development roadmap for the CPU Scheduling Algorithms Visualizer aims to expand its educational value, enhance its technical capabilities, and foster a community of learners and contributors around the project. By implementing these enhancements, the project can continue to evolve as a comprehensive educational resource for operating systems concepts.
+These enhancements would further expand the educational value and technical capabilities of the application, creating a more comprehensive learning resource for operating systems concepts.
 
 ## 8. References
 
 ### 8.1 Academic References
-
 1. Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). *Operating System Concepts* (10th ed.). Wiley.
-   - Foundation for CPU scheduling algorithms concepts and principles
-
 2. Tanenbaum, A. S., & Bos, H. (2014). *Modern Operating Systems* (4th ed.). Pearson.
-   - Detailed explanations of CPU scheduling algorithms and performance metrics
-
 3. Stallings, W. (2017). *Operating Systems: Internals and Design Principles* (9th ed.). Pearson.
-   - Comprehensive coverage of process scheduling and management
 
-4. Liu, J. W. S. (2000). *Real-Time Systems*. Prentice Hall.
-   - Reference for real-time scheduling algorithms and deadline handling
+### 8.2 Technical Documentation
+1. Next.js Documentation: https://nextjs.org/docs
+2. React Documentation: https://reactjs.org/docs
+3. Framer Motion Documentation: https://www.framer.com/motion
+4. Chart.js Documentation: https://www.chartjs.org/docs
 
-5. Nutt, G. (2004). *Operating Systems: A Modern Perspective* (3rd ed.). Addison-Wesley.
-   - Alternative perspective on scheduling algorithms and their implementation
-
-### 8.2 Technical References
-
-6. Next.js Documentation. (2023). Retrieved from https://nextjs.org/docs
-   - Official documentation for the Next.js framework used in the project
-
-7. React Documentation. (2023). Retrieved from https://reactjs.org/docs
-   - Official documentation for React library
-
-8. TypeScript Documentation. (2023). Retrieved from https://www.typescriptlang.org/docs
-   - Official documentation for TypeScript language
-
-9. Tailwind CSS Documentation. (2023). Retrieved from https://tailwindcss.com/docs
-   - Reference for the utility-first CSS framework used in the project
-
-10. Framer Motion Documentation. (2023). Retrieved from https://www.framer.com/motion
-    - Reference for the animation library used for visualizations
-
-11. Shadcn/UI Documentation. (2023). Retrieved from https://ui.shadcn.com
-    - Reference for the UI component library
-
-12. Chart.js Documentation. (2023). Retrieved from https://www.chartjs.org/docs
-    - Reference for the charting library used for data visualization
-
-### 8.3 Online Educational Resources
-
-13. GeeksforGeeks. (2023). CPU Scheduling in Operating Systems. Retrieved from https://www.geeksforgeeks.org/cpu-scheduling-in-operating-systems/
-    - Comprehensive explanations and examples of CPU scheduling algorithms
-
-14. Tutorialspoint. (2023). Operating System - Process Scheduling. Retrieved from https://www.tutorialspoint.com/operating_system/os_process_scheduling.htm
-    - Tutorial-style explanations of process scheduling concepts
-
-15. Operating Systems: Three Easy Pieces. (2023). CPU Scheduling. Retrieved from https://pages.cs.wisc.edu/~remzi/OSTEP/
-    - Open-source operating systems textbook with detailed scheduling chapters
-
-16. Khan Academy. (2023). CPU Scheduling. Retrieved from https://www.khanacademy.org/computing/computers-and-internet
-    - Educational videos and exercises on CPU scheduling
-
-17. MIT OpenCourseWare. (2023). Operating System Engineering. Retrieved from https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-828-operating-system-engineering-fall-2012/
-    - Academic course materials on operating systems concepts
-
-### 8.4 Design and UX References
-
-18. Nielsen Norman Group. (2020). Educational Interface Design Best Practices. Retrieved from https://www.nngroup.com/
-    - Guidelines for designing effective educational interfaces
-
-19. Interaction Design Foundation. (2023). Data Visualization for Clarity. Retrieved from https://www.interaction-design.org/
-    - Best practices for creating clear and informative data visualizations
-
-20. Smashing Magazine. (2023). Designing for Education: UX Considerations. Retrieved from https://www.smashingmagazine.com/
-    - Articles on designing effective educational applications
-
-### 8.5 Related Projects and Inspirations
-
-21. VisuAlgo. (2023). Algorithm Visualization. Retrieved from https://visualgo.net/
-    - Inspiration for algorithm visualization techniques
-
-22. OS Simulator. (2023). GitHub Repository. Retrieved from https://github.com/topics/os-simulator
-    - Similar projects that demonstrate operating system concepts
-
-23. CPU Scheduling Simulator. (2022). Retrieved from https://boonsuen.com/process-scheduling-solver
-    - Web-based tool for solving CPU scheduling problems
-
-24. Algorithm Visualizer. (2023). Retrieved from https://algorithm-visualizer.org/
-    - Open-source platform for algorithm visualization
-
-25. Process Scheduling Visualization. (2023). Retrieved from https://github.com/tashbalrai/ProcessScheduler
-    - Similar project focused on process scheduling visualization
-
-These references provided valuable insights, knowledge, and inspiration throughout the development of the CPU Scheduling Algorithms Visualizer project. They serve as both foundational academic resources and practical technical guides that informed the design, implementation, and educational aspects of the application.
+### 8.3 Online Resources
+1. GeeksforGeeks - CPU Scheduling: https://www.geeksforgeeks.org/cpu-scheduling-in-operating-systems/
+2. Operating Systems: Three Easy Pieces: https://pages.cs.wisc.edu/~remzi/OSTEP/
+3. VisuAlgo - Algorithm Visualization: https://visualgo.net/
+4. CPU Scheduling Simulator: https://boonsuen.com/process-scheduling-solver
 
 ## Appendix
 
-### A. AI-Generated Project Elaboration/Breakdown Report
+### A. Problem Statement
 
-#### A.1 Project Overview and Purpose
+The traditional approach to teaching CPU scheduling algorithms in operating systems courses presents several challenges:
 
-The CPU Scheduling Algorithms Visualizer is an educational web application designed to help students and professionals understand the complex concepts of CPU scheduling in operating systems. The primary purpose of this project is to transform abstract theoretical concepts into interactive, visual learning experiences.
+1. **Abstract Concepts**: CPU scheduling algorithms involve abstract concepts that are difficult to visualize mentally.
+2. **Limited Interactivity**: Static textbooks and lectures don't allow students to experiment with algorithm behavior.
+3. **Difficulty Comparing Algorithms**: Students struggle to compare different algorithms without seeing them side-by-side.
+4. **Complex Metrics**: Performance metrics like waiting time and turnaround time are challenging to calculate manually.
 
-CPU scheduling algorithms determine how a computer allocates processor time to different processes, making them fundamental to understanding operating system behavior. However, these concepts can be challenging for students to grasp when presented only through textbooks or lectures. This visualizer addresses this challenge by providing:
+This project aims to address these challenges by creating an interactive visualization tool that:
+- Provides accurate implementation of FCFS, SJF, Round Robin, and Priority Scheduling algorithms
+- Offers dynamic, animated visualizations of process execution
+- Enables customization of process parameters for experimentation
+- Calculates and displays performance metrics automatically
+- Allows side-by-side algorithm comparison
+- Presents educational content that connects visualizations to theory
 
-1. **Interactive Visualizations**: Dynamic, animated representations of how different scheduling algorithms work in real-time
-2. **Hands-On Learning**: The ability to create and modify process sets to observe how algorithms behave under different conditions
-3. **Comparative Analysis**: Tools to compare multiple algorithms side-by-side with the same inputs
-4. **Metric Calculations**: Automatic computation of important performance metrics like waiting time, turnaround time, and CPU utilization
-5. **Educational Content**: Contextual explanations and theoretical background for each algorithm
+The target outcome is enhanced student comprehension through visual learning, practical experience with algorithm behavior, and development of comparative analysis skills.
 
-The project targets several user groups:
-- **Students** learning operating systems concepts in computer science or engineering programs
-- **Educators** seeking visual aids to enhance their teaching of operating systems
-- **Self-learners** studying operating systems independently
-- **Professionals** refreshing their knowledge of these fundamental concepts
+### B. Core Implementation Excerpt
 
-#### A.2 Detailed Architecture Breakdown
-
-The application follows a modern web architecture based on Next.js, with a component-based structure that emphasizes reusability and modularity. The architecture can be broken down into several layers:
-
-**1. Presentation Layer**
-- **UI Components**: Reusable interface elements built with Shadcn/UI and styled with Tailwind CSS
-- **Page Components**: Algorithm-specific pages that compose UI components and visualization elements
-- **Layout Components**: Structural elements like navigation and footer that maintain consistent UX
-
-**2. Visualization Layer**
-- **Animation Components**: Framer Motion-powered components that animate the scheduling processes
-- **Chart Components**: Data visualization elements built with Chart.js to display metrics and comparisons
-- **Timeline Components**: Components that represent the time-based execution of processes
-
-**3. Business Logic Layer**
-- **Algorithm Implementations**: JavaScript/TypeScript implementations of each scheduling algorithm
-- **Metric Calculators**: Functions that compute performance metrics based on algorithm results
-- **State Management**: React hooks and context for managing application state
-
-**4. Data Layer**
-- **Process Models**: TypeScript interfaces and types defining the structure of processes
-- **Result Models**: Data structures for storing and analyzing algorithm outcomes
-- **Configuration Models**: Types for algorithm parameters and settings
-
-**5. Utility Layer**
-- **Helper Functions**: Common utilities for data transformation and manipulation
-- **Animation Utilities**: Helpers for creating smooth and accurate animations
-- **Theming Utilities**: Tools for managing light/dark mode and other visual preferences
-
-This layered architecture promotes separation of concerns, making the codebase more maintainable and extensible. The modular approach also allows for easy addition of new algorithms or features in the future.
-
-#### A.3 Detailed Algorithm Implementation Analysis
-
-Each CPU scheduling algorithm is implemented with careful attention to theoretical correctness and educational value:
-
-**First-Come, First-Served (FCFS)**
-- Implementation follows the non-preemptive approach where processes are executed in arrival order
-- Edge cases handle scenarios where multiple processes arrive simultaneously
-- Visualization clearly shows the non-preemptive nature and potential convoy effect
-- Performance metrics highlight the simplicity but potential inefficiency of FCFS
-
-**Shortest Job First (SJF)**
-- Implementation correctly selects the process with the shortest burst time from the ready queue
-- Handles edge cases like tie-breaking between processes with identical burst times
-- Visualization demonstrates why SJF achieves optimal average waiting time
-- Educational content explains the starvation problem and real-world limitations
-
-**Round Robin (RR)**
-- Implementation correctly applies the time quantum concept, cycling through processes
-- Includes configurable time quantum to demonstrate its impact on performance
-- Visualization shows context switching overhead and how it affects efficiency
-- Performance metrics illustrate the trade-off between responsiveness and overhead
-
-**Priority Scheduling**
-- Implementation respects process priorities, with options for preemptive and non-preemptive modes
-- Includes mechanisms to handle priority inversion and potential starvation
-- Visualization clearly shows how higher-priority processes take precedence
-- Educational content explains real-world applications and limitations
-
-**Comparison Module**
-- Simultaneously applies all algorithms to identical process sets
-- Calculates comparative metrics across all algorithms
-- Visualizes differences in execution order and timing
-- Provides analytical insights into algorithm strengths and weaknesses
-
-Each algorithm implementation includes comprehensive documentation, explaining the logic, edge cases, and educational significance of the visualization choices.
-
-#### A.4 User Experience Design Principles
-
-The application's user experience is designed with several key principles in mind:
-
-**1. Educational Clarity**
-- Visualizations prioritize conceptual clarity over flashy effects
-- Color coding consistently represents processes across different views
-- Animation speeds can be adjusted to facilitate understanding
-- Textual explanations accompany visualizations to reinforce concepts
-
-**2. Progressive Disclosure**
-- Basic concepts are presented first, with additional complexity revealed as needed
-- Advanced settings and options are available but don't overwhelm new users
-- Educational content is layered, from simple summaries to detailed explanations
-
-**3. Accessibility and Inclusivity**
-- Interface follows WCAG guidelines for accessibility
-- Color schemes are designed with color blindness considerations
-- Dark/light mode options accommodate different visual preferences
-- Responsive design ensures usability across devices and screen sizes
-
-**4. Interactive Learning**
-- "Learn by doing" approach encourages experimentation
-- Immediate visual feedback reinforces understanding
-- Step-by-step modes allow for detailed examination of algorithm behavior
-- Customizable parameters encourage exploration of edge cases and scenarios
-
-**5. Seamless Navigation**
-- Consistent layout across algorithm pages
-- Clear pathways between different algorithms and the comparison tool
-- Breadcrumb navigation for multi-step processes
-- Persistent access to key features and controls
-
-These principles combine to create an educational tool that is both effective and engaging, making complex operating systems concepts more accessible to learners at various levels.
-
-### B. Problem Statement
-
-#### B.1 Educational Challenges in Operating Systems
-
-Understanding CPU scheduling algorithms is a fundamental requirement for computer science students studying operating systems. However, several challenges exist in traditional educational approaches:
-
-1. **Abstract Concepts**: CPU scheduling algorithms involve abstract concepts related to time management, process states, and resource allocation that are difficult to visualize mentally.
-
-2. **Limited Interactive Learning**: Textbooks and lectures often present these concepts statically, without the ability for students to experiment and observe dynamic behavior.
-
-3. **Comparison Difficulty**: Students struggle to compare different algorithms and understand their relative strengths and weaknesses without seeing them run side-by-side.
-
-4. **Metric Comprehension**: Performance metrics like average waiting time and turnaround time are challenging to calculate manually and even harder to connect to real-world implications.
-
-5. **Edge Case Understanding**: Special scenarios and edge cases in scheduling algorithms are difficult to explain without interactive demonstrations.
-
-6. **Practical Application Gap**: Students often learn the theoretical aspects without connecting them to practical applications and real-world situations.
-
-#### B.2 Technical Requirements
-
-To address these educational challenges, a comprehensive CPU scheduling visualization tool must meet the following technical requirements:
-
-1. **Algorithm Implementation**: Accurate implementation of FCFS, SJF, Round Robin, and Priority Scheduling algorithms according to theoretical principles.
-
-2. **Interactive Visualization**: Dynamic, animated visualization of process execution, queue management, and CPU allocation.
-
-3. **Customizable Process Sets**: Interface for creating custom process sets with configurable parameters (arrival time, burst time, priority).
-
-4. **Performance Metrics**: Automatic calculation and display of waiting time, turnaround time, response time, and CPU utilization.
-
-5. **Comparative Analysis**: Side-by-side comparison of different algorithms using identical process sets.
-
-6. **Responsive Design**: User interface that works across devices and screen sizes, from desktops to tablets.
-
-7. **Educational Content**: Integration of explanatory content that connects visualizations to theoretical concepts.
-
-8. **Accessibility**: Interface that follows accessibility best practices to ensure inclusivity.
-
-9. **Performance Optimization**: Efficient implementation that handles visualization smoothly, even with larger process sets.
-
-10. **Extensibility**: Architecture that allows for the addition of new algorithms and features in the future.
-
-#### B.3 Target Outcomes
-
-The CPU Scheduling Algorithms Visualizer aims to achieve the following outcomes:
-
-1. **Enhanced Comprehension**: Improved student understanding of CPU scheduling algorithms through visual learning.
-
-2. **Practical Experience**: Hands-on experience with algorithm behavior without requiring access to operating system internals.
-
-3. **Comparative Analysis Skills**: Development of critical thinking abilities to evaluate algorithm performance in different scenarios.
-
-4. **Performance Metric Literacy**: Better understanding of how performance metrics relate to algorithm behavior and efficiency.
-
-5. **Educational Resource**: Creation of a valuable resource for educators teaching operating systems courses.
-
-6. **Self-Directed Learning**: Support for independent learners studying operating systems concepts outside traditional classrooms.
-
-7. **Operating Systems Fundamentals**: Stronger foundation in the fundamental principles that underpin modern operating systems.
-
-This problem statement defines the educational challenges, technical requirements, and target outcomes that drive the development of the CPU Scheduling Algorithms Visualizer project.
-
-### C. Solution/Code
-
-The CPU Scheduling Algorithms Visualizer solution is implemented using Next.js with TypeScript. Below are the key components of the codebase that power the core visualization functionality. The main component responsible for the algorithm animations is presented here:
+The core algorithm visualization component implements the scheduling algorithms and their animations:
 
 ```typescript
-// components/algorithm-animation.tsx - Core visualization component
+// Excerpt from components/algorithm-animation.tsx
 
-"use client"
-
-import { useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
-
-interface Process {
-  id: number
-  burstTime: number
-  arrivalTime: number
-  priority?: number
-  color: string
+// Algorithm simulation functions
+const simulateFCFS = (procs: Process[]): number[] => {
+  const sortedByArrival = [...procs].sort((a, b) => a.arrivalTime - b.arrivalTime)
+  const result: number[] = []
+  let currentTime = 0
+  
+  for (const proc of sortedByArrival) {
+    // If there's a gap between current time and process arrival, add idle time
+    if (proc.arrivalTime > currentTime) {
+      for (let i = 0; i < proc.arrivalTime - currentTime; i++) {
+        result.push(0) // 0 indicates CPU is idle
+      }
+      currentTime = proc.arrivalTime
+    }
+    
+    // Add process execution time
+    for (let i = 0; i < proc.burstTime; i++) {
+      result.push(proc.id)
+    }
+    currentTime += proc.burstTime
+  }
+  
+  return result
 }
 
-interface AlgorithmAnimationProps {
-  type: "overview" | "fcfs" | "sjf" | "round-robin" | "priority"
-}
-
-export default function AlgorithmAnimation({ type }: AlgorithmAnimationProps) {
-  const [processes, setProcesses] = useState<Process[]>([])
-  const [currentTime, setCurrentTime] = useState(0)
-  const [timeQuantum] = useState(2)
-  const [executionOrder, setExecutionOrder] = useState<number[]>([])
-  const [completedProcesses, setCompletedProcesses] = useState<number[]>([])
-  const [isAnimating, setIsAnimating] = useState(true)
-  const [metrics, setMetrics] = useState({
-    averageWaitingTime: 0,
-    averageTurnaroundTime: 0,
-    cpuUtilization: 0,
-  })
-  const animationRef = useRef<number | null>(null)
-
-  // Generate random processes for demonstration
-  useEffect(() => {
-    const colors = [
-      "#f97316", // Orange
-      "#8b5cf6", // Purple
-      "#06b6d4", // Cyan
-      "#ec4899", // Pink
-      "#84cc16", // Lime
-    ]
-
-    const generateProcesses = (): Process[] => {
-      if (type === "overview") {
-        // Simple process set for overview
-        return [
-          { id: 1, arrivalTime: 0, burstTime: 3, color: colors[0] },
-          { id: 2, arrivalTime: 1, burstTime: 2, color: colors[1] },
-          { id: 3, arrivalTime: 2, burstTime: 4, color: colors[2] },
-          { id: 4, arrivalTime: 3, burstTime: 1, color: colors[3] },
-        ]
-      }
-
-      // More varied process set for algorithm-specific pages
-      const processCount = Math.floor(Math.random() * 3) + 3 // 3-5 processes
-      return Array.from({ length: processCount }, (_, i) => ({
-        id: i + 1,
-        arrivalTime: Math.floor(Math.random() * 5),
-        burstTime: Math.floor(Math.random() * 5) + 1,
-        priority: Math.floor(Math.random() * 5) + 1,
-        color: colors[i % colors.length],
-      }))
-    }
-
-    setProcesses(generateProcesses())
-    setCurrentTime(0)
-    setCompletedProcesses([])
-    setExecutionOrder([])
-  }, [type])
-
-  // Initialize simulation when processes are set
-  useEffect(() => {
-    if (processes.length === 0) return
-
-    let order: number[] = []
+const simulateSJF = (procs: Process[]): number[] => {
+  const result: number[] = []
+  let remainingProcs = [...procs]
+  let currentTime = 0
+  
+  while (remainingProcs.length > 0) {
+    // Find available processes (arrived by current time)
+    const availableProcs = remainingProcs.filter(p => p.arrivalTime <= currentTime)
     
-    switch (type) {
-      case "fcfs":
-        order = simulateFCFS(processes)
-        break
-      case "sjf":
-        order = simulateSJF(processes)
-        break
-      case "round-robin":
-        order = simulateRoundRobin(processes, timeQuantum)
-        break
-      case "priority":
-        order = simulatePriority(processes)
-        break
-      default:
-        // For overview, use FCFS as default
-        order = simulateFCFS(processes)
+    if (availableProcs.length === 0) {
+      // No process available, advance time to next arrival
+      const nextArrival = Math.min(...remainingProcs.map(p => p.arrivalTime))
+      for (let i = 0; i < nextArrival - currentTime; i++) {
+        result.push(0) // CPU idle
+      }
+      currentTime = nextArrival
+      continue
     }
     
-    setExecutionOrder(order)
-    calculateMetrics(processes, order)
-  }, [processes, type, timeQuantum])
-
-  // Animation loop
-  useEffect(() => {
-    if (!isAnimating || executionOrder.length === 0) return
-
-    let startTime = 0
-    let lastFrameTime = 0
-
-    const animate = () => {
-      const now = performance.now()
-      
-      if (startTime === 0) {
-        startTime = now
-        lastFrameTime = now
-      }
-      
-      const deltaTime = now - lastFrameTime
-      
-      // Advance time at a reasonable rate (500ms of real time = 1 unit of simulation time)
-      if (deltaTime > 500) {
-        lastFrameTime = now
-        setCurrentTime(prevTime => {
-          const nextTime = prevTime + 1
-          
-          // Update completed processes
-          const newlyCompleted = processes.filter(p => {
-            const processCompletionTime = calculateCompletionTime(p.id, executionOrder)
-            return processCompletionTime === nextTime
-          }).map(p => p.id)
-          
-          if (newlyCompleted.length > 0) {
-            setCompletedProcesses(prev => [...prev, ...newlyCompleted])
-          }
-          
-          // Stop animation when all processes are completed
-          const maxTime = executionOrder.length
-          if (nextTime >= maxTime) {
-            setIsAnimating(false)
-            return maxTime
-          }
-          
-          return nextTime
-        })
-      }
-      
-      animationRef.current = requestAnimationFrame(animate)
-    }
-    
-    animationRef.current = requestAnimationFrame(animate)
-    
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
-      }
-    }
-  }, [isAnimating, executionOrder, processes])
-
-  // Algorithm simulation functions
-  const simulateFCFS = (procs: Process[]): number[] => {
-    const sortedByArrival = [...procs].sort((a, b) => a.arrivalTime - b.arrivalTime)
-    const result: number[] = []
-    let currentTime = 0
-    
-    for (const proc of sortedByArrival) {
-      // If there's a gap between current time and process arrival, add idle time
-      if (proc.arrivalTime > currentTime) {
-        for (let i = 0; i < proc.arrivalTime - currentTime; i++) {
-          result.push(0) // 0 indicates CPU is idle
-        }
-        currentTime = proc.arrivalTime
-      }
-      
-      // Add process execution time
-      for (let i = 0; i < proc.burstTime; i++) {
-        result.push(proc.id)
-      }
-      currentTime += proc.burstTime
-    }
-    
-    return result
-  }
-
-  const simulateSJF = (procs: Process[]): number[] => {
-    const result: number[] = []
-    let remainingProcs = [...procs]
-    let currentTime = 0
-    
-    while (remainingProcs.length > 0) {
-      // Find available processes (arrived by current time)
-      const availableProcs = remainingProcs.filter(p => p.arrivalTime <= currentTime)
-      
-      if (availableProcs.length === 0) {
-        // No process available, advance time to next arrival
-        const nextArrival = Math.min(...remainingProcs.map(p => p.arrivalTime))
-        for (let i = 0; i < nextArrival - currentTime; i++) {
-          result.push(0) // CPU idle
-        }
-        currentTime = nextArrival
-        continue
-      }
-      
-      // Find shortest job among available processes
-      const shortestProc = availableProcs.reduce(
-        (min, p) => p.burstTime < min.burstTime ? p : min,
-        availableProcs[0]
-      )
-      
-      // Execute the shortest job
-      for (let i = 0; i < shortestProc.burstTime; i++) {
-        result.push(shortestProc.id)
-      }
-      currentTime += shortestProc.burstTime
-      
-      // Remove completed process
-      remainingProcs = remainingProcs.filter(p => p.id !== shortestProc.id)
-    }
-    
-    return result
-  }
-
-  const simulateRoundRobin = (procs: Process[], quantum: number): number[] => {
-    const result: number[] = []
-    let remainingProcs = [...procs].map(p => ({ ...p, remainingTime: p.burstTime }))
-    let currentTime = 0
-    let readyQueue: Process[] = []
-    
-    while (remainingProcs.length > 0 || readyQueue.length > 0) {
-      // Add newly arrived processes to ready queue
-      const newArrivals = remainingProcs.filter(p => p.arrivalTime <= currentTime)
-      readyQueue.push(...newArrivals)
-      remainingProcs = remainingProcs.filter(p => p.arrivalTime > currentTime)
-      
-      if (readyQueue.length === 0) {
-        // No process in ready queue, advance time
-        const nextArrival = Math.min(...remainingProcs.map(p => p.arrivalTime))
-        for (let i = 0; i < nextArrival - currentTime; i++) {
-          result.push(0) // CPU idle
-        }
-        currentTime = nextArrival
-        continue
-      }
-      
-      // Get next process from ready queue
-      const currentProc = readyQueue.shift()!
-      
-      // Execute for quantum time or until completion
-      const executeTime = Math.min(quantum, currentProc.remainingTime)
-      for (let i = 0; i < executeTime; i++) {
-        result.push(currentProc.id)
-      }
-      currentTime += executeTime
-      currentProc.remainingTime -= executeTime
-      
-      // Add newly arrived processes during execution
-      const newArrivalsWhileExecuting = remainingProcs.filter(p => p.arrivalTime <= currentTime)
-      readyQueue.push(...newArrivalsWhileExecuting)
-      remainingProcs = remainingProcs.filter(p => p.arrivalTime > currentTime)
-      
-      // If process is not completed, add back to ready queue
-      if (currentProc.remainingTime > 0) {
-        readyQueue.push(currentProc)
-      }
-    }
-    
-    return result
-  }
-
-  const simulatePriority = (procs: Process[]): number[] => {
-    const result: number[] = []
-    let remainingProcs = [...procs]
-    let currentTime = 0
-    
-    while (remainingProcs.length > 0) {
-      // Find available processes (arrived by current time)
-      const availableProcs = remainingProcs.filter(p => p.arrivalTime <= currentTime)
-      
-      if (availableProcs.length === 0) {
-        // No process available, advance time to next arrival
-        const nextArrival = Math.min(...remainingProcs.map(p => p.arrivalTime))
-        for (let i = 0; i < nextArrival - currentTime; i++) {
-          result.push(0) // CPU idle
-        }
-        currentTime = nextArrival
-        continue
-      }
-      
-      // Find highest priority process (lower number = higher priority)
-      const highestPriorityProc = availableProcs.reduce(
-        (min, p) => (p.priority || 5) < (min.priority || 5) ? p : min,
-        availableProcs[0]
-      )
-      
-      // Execute the highest priority process
-      for (let i = 0; i < highestPriorityProc.burstTime; i++) {
-        result.push(highestPriorityProc.id)
-      }
-      currentTime += highestPriorityProc.burstTime
-      
-      // Remove completed process
-      remainingProcs = remainingProcs.filter(p => p.id !== highestPriorityProc.id)
-    }
-    
-    return result
-  }
-
-  // Helper functions
-  const calculateCompletionTime = (processId: number, executionOrder: number[]): number => {
-    for (let i = executionOrder.length - 1; i >= 0; i--) {
-      if (executionOrder[i] === processId) {
-        return i + 1
-      }
-    }
-    return 0
-  }
-
-  const calculateMetrics = (procs: Process[], executionOrder: number[]) => {
-    if (procs.length === 0 || executionOrder.length === 0) return
-    
-    const completionTimes: Record<number, number> = {}
-    const firstExecutionTimes: Record<number, number> = {}
-    
-    // Find completion times and first execution times
-    for (let i = 0; i < executionOrder.length; i++) {
-      const pid = executionOrder[i]
-      if (pid === 0) continue // Skip idle time
-      
-      if (firstExecutionTimes[pid] === undefined) {
-        firstExecutionTimes[pid] = i
-      }
-      completionTimes[pid] = i + 1
-    }
-    
-    let totalWaitingTime = 0
-    let totalTurnaroundTime = 0
-    
-    procs.forEach(proc => {
-      const completionTime = completionTimes[proc.id] || 0
-      const turnaroundTime = completionTime - proc.arrivalTime
-      const waitingTime = turnaroundTime - proc.burstTime
-      
-      totalWaitingTime += waitingTime
-      totalTurnaroundTime += turnaroundTime
-    })
-    
-    const avgWaitingTime = totalWaitingTime / procs.length
-    const avgTurnaroundTime = totalTurnaroundTime / procs.length
-    
-    // Calculate CPU utilization (non-idle time / total time)
-    const idleTimeUnits = executionOrder.filter(pid => pid === 0).length
-    const cpuUtil = ((executionOrder.length - idleTimeUnits) / executionOrder.length) * 100
-    
-    setMetrics({
-      averageWaitingTime: parseFloat(avgWaitingTime.toFixed(2)),
-      averageTurnaroundTime: parseFloat(avgTurnaroundTime.toFixed(2)),
-      cpuUtilization: parseFloat(cpuUtil.toFixed(2)),
-    })
-  }
-
-  const renderVisualization = () => {
-    if (processes.length === 0 || executionOrder.length === 0) {
-      return <div className="flex items-center justify-center h-full">Loading...</div>
-    }
-    
-    const maxTime = executionOrder.length
-    const timelineWidth = `${maxTime * 40}px`
-    
-    return (
-      <div className="flex flex-col h-full overflow-hidden">
-        {/* Process queue visualization */}
-        <div className="flex-1 overflow-x-auto">
-          <div className="relative h-full" style={{ width: timelineWidth, minWidth: "100%" }}>
-            {/* Timeline */}
-            <div className="absolute bottom-0 left-0 w-full h-8 flex">
-              {Array.from({ length: maxTime + 1 }).map((_, i) => (
-                <div 
-                  key={`time-${i}`} 
-                  className="w-10 h-full flex items-center justify-center text-xs border-r border-gray-200 dark:border-gray-800"
-                >
-                  {i}
-                </div>
-              ))}
-            </div>
-            
-            {/* Process rows */}
-            <div className="absolute top-0 left-0 w-full h-[calc(100%-2rem)]">
-              {processes.map((process, idx) => (
-                <div 
-                  key={`process-${process.id}`} 
-                  className="w-full h-8 mb-2 relative flex items-center"
-                >
-                  {/* Process label */}
-                  <div className="absolute -left-8 w-8 font-mono text-xs">P{process.id}</div>
-                  
-                  {/* Process timeline */}
-                  <div className="flex h-full w-full">
-                    {/* Empty slots before arrival */}
-                    {Array.from({ length: process.arrivalTime }).map((_, i) => (
-                      <div key={`empty-${process.id}-${i}`} className="w-10 h-full"></div>
-                    ))}
-                    
-                    {/* Execution slots */}
-                    {executionOrder.slice(process.arrivalTime).map((pid, timeIdx) => {
-                      const actualTime = timeIdx + process.arrivalTime
-                      const isCurrentProcess = pid === process.id
-                      const isActive = actualTime === currentTime && isCurrentProcess
-                      
-                      return (
-                        <div 
-                          key={`slot-${process.id}-${actualTime}`} 
-                          className="w-10 h-full flex items-center justify-center"
-                        >
-                          {isCurrentProcess && (
-                            <motion.div
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              className="w-8 h-6 rounded-sm flex items-center justify-center text-xs text-white"
-                              style={{ backgroundColor: process.color }}
-                            >
-                              {isActive && <span>→</span>}
-                            </motion.div>
-                          )}
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Current time indicator */}
-            <motion.div 
-              className="absolute h-full w-px bg-red-500 z-10"
-              initial={{ left: 0 }}
-              animate={{ left: `${currentTime * 40 + 20}px` }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-        </div>
-        
-        {/* Metrics display */}
-        <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
-          <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded">
-            <div className="font-semibold">Avg. Waiting Time</div>
-            <div>{metrics.averageWaitingTime} units</div>
-          </div>
-          <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded">
-            <div className="font-semibold">Avg. Turnaround Time</div>
-            <div>{metrics.averageTurnaroundTime} units</div>
-          </div>
-          <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded">
-            <div className="font-semibold">CPU Utilization</div>
-            <div>{metrics.cpuUtilization}%</div>
-          </div>
-        </div>
-      </div>
+    // Find shortest job among available processes
+    const shortestProc = availableProcs.reduce(
+      (min, p) => p.burstTime < min.burstTime ? p : min,
+      availableProcs[0]
     )
+    
+    // Execute the shortest job
+    for (let i = 0; i < shortestProc.burstTime; i++) {
+      result.push(shortestProc.id)
+    }
+    currentTime += shortestProc.burstTime
+    
+    // Remove completed process
+    remainingProcs = remainingProcs.filter(p => p.id !== shortestProc.id)
   }
-
-  return (
-    <div className="h-full flex flex-col">
-      <div className="mb-2 flex justify-between items-center">
-        <h3 className="text-sm font-medium">
-          {type === "overview" ? "Algorithm Preview" : 
-           type === "fcfs" ? "First-Come, First-Served" :
-           type === "sjf" ? "Shortest Job First" :
-           type === "round-robin" ? "Round Robin" :
-           "Priority Scheduling"}
-        </h3>
-        <button
-          className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded"
-          onClick={() => {
-            setCurrentTime(0)
-            setCompletedProcesses([])
-            setIsAnimating(!isAnimating)
-          }}
-        >
-          {isAnimating ? "Pause" : "Play"}
-        </button>
-      </div>
-      {renderVisualization()}
-    </div>
-  )
+  
+  return result
 }
+
+// Additional algorithms and helper functions omitted for brevity
 ```
 
-This core component implements:
-
-1. Process state management for each algorithm
-2. Animation logic for visualizing the execution timeline
-3. Algorithm implementations for FCFS, SJF, Round Robin, and Priority Scheduling
-4. Performance metric calculations
-5. Rendering of the timeline visualization and metrics display
-
-The component uses React hooks for state management and Framer Motion for animations, providing a smooth and interactive visualization of CPU scheduling concepts. This implementation demonstrates the integration of theoretical algorithm knowledge with modern web development practices to create an effective educational tool. 
+This implementation demonstrates how the scheduling algorithms are translated into code, providing accurate simulations that power the visualizations. The component uses React hooks for state management and Framer Motion for animations, creating an effective educational tool. 
